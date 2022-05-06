@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'docker-compose build deltachat-test'
-				sh 'docker-compose up --force-recreate deltachat-test'
+				sh 'docker-compose up --force-recreate -d deltachat-test'
             }
             post {
                 success {
