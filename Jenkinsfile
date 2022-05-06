@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh 'docker-compose build'
+                echo 'Building...'
+                sh 'docker-compose build deltachat-build'
             }
             post {
                 success {
@@ -20,8 +20,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh 'docker-compose build'
-				sh 'docker-compose up'
+                sh 'docker-compose build deltachat-test'
+				sh 'docker-compose up --force-recreate deltachat-test'
             }
             post {
                 success {
