@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh 'docker-compose build deltachat-test'
+                sh 'docker-compose build --no-cache deltachat-test'
 				sh 'docker-compose up --force-recreate -d deltachat-test'
             }
             post {
