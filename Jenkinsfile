@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'docker-compose build deltachat-build'
+                sh 'docker-compose build --no-cache deltachat-build'
             }
             post {
                 success {
