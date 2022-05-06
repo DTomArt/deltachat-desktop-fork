@@ -24,7 +24,7 @@ class PersistentState extends EventEmitter {
   }
 
   async load() {
-    const default_state = getDefaultState()
+    const default_state = getDefaultSate()
     let saved: Partial<DesktopSettingsType> = {}
     try {
       saved = (await promisify(cb =>
