@@ -5,13 +5,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'docker-compose build --no-cache deltachat-build'
+                sh 'docker-compose build deltachat-build'
             }
             post {
                 success {
                     echo 'Build completed successfully!'
                 }
-                failure {
+                failure { 
                     echo 'Error in build!'
                     sh 'false'
                 }
