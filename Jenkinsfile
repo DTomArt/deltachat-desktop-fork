@@ -6,12 +6,13 @@ pipeline {
             steps {
                 echo 'Building...'
                 sh 'docker-compose build deltachat-build'
+                sh 'docker-compose logs > logs.txt'
             }
             post {
                 success {
                     echo 'Build completed successfully!'
                 }
-                failure { 
+                failure {
                     echo 'Error in build!'
                     sh 'false'
                 }
@@ -20,8 +21,30 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh 'docker-compose build --no-cache deltachat-test'
+                sh 'docker-compose build deltachat-test'
 				sh 'docker-compose up --force-recreate -d deltachat-test'
+            }
+            post {
+                success {
+                    echo 'Testing completed successfully!'
+                }
+                failure {
+                    echo 'Error in testing!'
+                    sh 'false'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                archiveArtifacts(artifacts: '**/*.txt', followSymlinks: false)
+                echo 'Deploying..'
+                sh 'docker-compose  up -d deltachat-build'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh '''
+                docker images
+                docker tag deltachat-build:latest dtomart/jenkins
+                docker push dtomart/jenkins
+                '''
             }
             post {
                 success {
