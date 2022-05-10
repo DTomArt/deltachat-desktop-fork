@@ -44,8 +44,8 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh '''
                 docker images
-                docker tag deltachat-build:latest dtomart/jenkins
-                docker push dtomart/jenkins
+                docker tag deltachat-build:latest dtomart/devops-lab07
+                docker push dtomart/devops-lab07
                 '''
             }
             post {
